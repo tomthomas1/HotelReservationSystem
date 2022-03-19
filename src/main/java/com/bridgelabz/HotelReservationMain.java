@@ -1,7 +1,5 @@
 package com.bridgelabz;
 
-import java.util.HashMap;
-import java.util.Map;
 /**
  * This is a main class.
  * In this we are adding and displaying the hotel details.

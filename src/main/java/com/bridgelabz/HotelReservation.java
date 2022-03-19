@@ -1,21 +1,21 @@
 package com.bridgelabz;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * We have created this class to add the services of the hotel
- * [1] In this method we will add the hotel to the HashMap
+ * [1] In this method we will add the hotel to the ArrayList
  * [2] To display the hotel name and the details
  * @author Tom
  *
  */
 public class HotelReservation {
 	
-	Map<String, Hotel> hotelList = new HashMap<String, Hotel>();
+	ArrayList<Hotel> hotelList = new ArrayList<Hotel>();
      
 	/**
-	 * [1] In this method we will add the hotel to the HashMap
+	 * [1] In this method we will add the hotel to the ArrayList
 	 * @param hotelName - we will pass the hotel name
 	 * @param rating - we will pass the rating of the hotel
 	 * @param weekDayRateRegular - We will pass the rate of week day for the regular customer
@@ -29,7 +29,7 @@ public class HotelReservation {
 		hotels.setWeekDayRegularCustomerCost(weekDayRateRegular);
 		hotels.setWeekendRegularCustomerCost(weekendRateRegular);
 		
-		hotelList.put(hotelName, hotels);
+		hotelList.add(hotels);
 		return true;
 	}
 	
@@ -37,8 +37,7 @@ public class HotelReservation {
 	 * [2] To display the hotel name and the details
 	 */
 	public void displayHotel() {
-		for(String i : hotelList.keySet()) {
-			System.out.println("The Hotel is : " + i + " \n The details of hotel is : " + hotelList.get(i));
-		}
+		System.out.println(hotelList);
+		
 	}
 }
