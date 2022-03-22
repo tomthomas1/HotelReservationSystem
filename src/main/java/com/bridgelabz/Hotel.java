@@ -8,23 +8,24 @@ package com.bridgelabz;
 public class Hotel {
 	private String hotelName;
 	private int rating;
-	private double regularCustomerCost;
+	private double weekdayRegularCustomerCost;
+	private double weekendRegularCustomerCost;
 	
 	/**
 	 *  Parameterized Constructor
 	 *  Here we will pass the details of the regular customer
-	 * 
+	 *  We are also passing the weekDay and weekend rates.
 	 */
-	public Hotel(String hotelName, int rating, double regularCustomerCost) {
+	public Hotel(String hotelName, int rating, double weekdayRegularCustomerCost, double weekendRegularCustomerCost) {
 		this.hotelName = hotelName;
 		this.rating = rating;
-		this.regularCustomerCost = regularCustomerCost;
+		this.weekdayRegularCustomerCost = weekdayRegularCustomerCost;
+		this.weekendRegularCustomerCost = weekendRegularCustomerCost;
 	}
 	
-	public Hotel(){
-		
+	public Hotel() {
 	}
-
+	
 	public String getHotelName() {
 		return hotelName;
 	}
@@ -41,17 +42,28 @@ public class Hotel {
 		this.rating = rating;
 	}
 	
-	public double getRegularCustomerCost() {
-		return regularCustomerCost;
+	public double getWeekdayRegularCustomerCost() {
+		return weekdayRegularCustomerCost;
 	}
 	
-	public void setRegularCustomerCost(double regularCustomerCost) {
-		this.regularCustomerCost = regularCustomerCost;
+	public void setWeekdayRegularCustomerCost(double weekdayRegularCustomerCost) {
+		this.weekdayRegularCustomerCost = weekdayRegularCustomerCost;
 	}
 	
+	public double getWeekendRegularCustomerCost() {
+		return weekendRegularCustomerCost;
+	}
+	
+	public void setWeekendRegularCustomerCost(double weekendRegularCustomerCost) {
+		this.weekendRegularCustomerCost = weekendRegularCustomerCost;
+	}
+
 	@Override
 	public String toString() {
-		return "Hotels [hotelName=" + hotelName + ", rating=" + rating + ", Regular Customer Cost="+ regularCustomerCost +"]\n";
+		return " \n Hotel [hotelName=" + hotelName + ", rating=" + rating + ", weekdayRegularCustomerCost="
+				+ weekdayRegularCustomerCost + ", weekendRegularCustomerCost=" + weekendRegularCustomerCost + "]";
 	}
+	
+	
 
 }
