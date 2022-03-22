@@ -15,6 +15,7 @@ import org.junit.Test;
 public class HotelReservationTest {
 	@Test
 	public void givenHotelDetails_WhenValuesEnteredAreCorrect_ShoulReturnTrue() {
+		
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
@@ -26,6 +27,7 @@ public class HotelReservationTest {
 
 	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelName() {
+		
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
 		String hotelName = hotelReservation.getHotelList().get(0).getHotelName();
@@ -34,6 +36,7 @@ public class HotelReservationTest {
 
 	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelRating() {
+		
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
 		int hotelRating = hotelReservation.getHotelList().get(0).getRating();
@@ -42,6 +45,7 @@ public class HotelReservationTest {
 
 	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelWeekdayRegularCustomerCost() {
+		
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
 		int hotelRegularCustomerCost = (int) hotelReservation.getHotelList().get(0).getWeekdayRegularCustomerCost();
@@ -50,6 +54,7 @@ public class HotelReservationTest {
 
 	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelWeekendRegularCustomerCost() {
+		
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
 		int hotelRegularCustomerCost = (int) hotelReservation.getHotelList().get(0).getWeekendRegularCustomerCost();
@@ -58,6 +63,7 @@ public class HotelReservationTest {
 
 	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelWeekdayRewardCustomerCost() {
+		
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
 		int hotelRewardCustomerCost = (int) hotelReservation.getHotelList().get(0).getWeekdayRewardCustomerCost();
@@ -67,6 +73,7 @@ public class HotelReservationTest {
 
 	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelWeekendRewardCustomerCost() {
+		
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
 		int hotelRegularCustomerCost = (int) hotelReservation.getHotelList().get(0).getWeekendRewardCustomerCost();
@@ -75,32 +82,103 @@ public class HotelReservationTest {
 	}
 
 	@Test
-	public void givenHotelDetails_shouldReturnCheapestHotel() {
+	public void givenHotelDetails_WhenRegularCustomer_shouldReturnCheapestHotel() {
+
+		HotelReservation hotelReservation = new HotelReservation();
+		hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
+		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
+		
+		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+		String startDateToValidate = startDate.toString();
+		String endDateToValidate = endDate.toString();
+		boolean isValidStartDate = hotelReservation.validateDate(startDateToValidate);
+		boolean isValidEndDate = hotelReservation.validateDate(endDateToValidate);
+		
+		if(isValidStartDate && isValidEndDate) {
+			ArrayList<Hotel> hotel = hotelReservation.getCheapestHotel("regular", startDate, endDate);
+			String hotelName = hotel.get(0).getHotelName() + " " + hotel.get(1).getHotelName();
+			Assert.assertEquals("Lakewood Bridgewood", hotelName);
+		}
+		else {
+			System.out.println("Not Valid Start Or End date");
+		}
+	}
+
+	@Test
+	public void givenHotelDetails_WhenRegularCustomerAndHotelPricesAreSame_shouldReturnHighestRatedHotel() {
+
+		HotelReservation hotelReservation = new HotelReservation();
+		hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
+		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
+		
+		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+		String startDateToValidate = startDate.toString();
+		String endDateToValidate = endDate.toString();
+		boolean isValidStartDate = hotelReservation.validateDate(startDateToValidate);
+		boolean isValidEndDate = hotelReservation.validateDate(endDateToValidate);
+		
+		if(isValidStartDate && isValidEndDate) {
+			Hotel hotel = hotelReservation.getCheapestBestRatedHotel("regular", startDate, endDate);
+			Assert.assertEquals("Bridgewood", hotel.getHotelName());
+		}	
+		else {
+			System.out.println("Not Valid Start Or End date");
+		}
+	}
+
+	@Test
+	public void givenHotelDetails_WhenRegularCustomer_ShouldReturnHighestRatedHotel() {
+
+		HotelReservation hotelReservation = new HotelReservation();
+		hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
+		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
+		hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
+		
+		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+		String startDateToValidate = startDate.toString();
+		String endDateToValidate = endDate.toString();
+		boolean isValidStartDate = hotelReservation.validateDate(startDateToValidate);
+		boolean isValidEndDate = hotelReservation.validateDate(endDateToValidate);
+		
+		if(isValidStartDate && isValidEndDate) {
+			Hotel hotel = hotelReservation.getBestRatedHotel("regular", startDate, endDate);
+			Assert.assertEquals("Ridgewood", hotel.getHotelName());
+		}
+		else {
+			System.out.println("Not Valid Start Or End date");
+		}
+	}
+
+	@Test
+	public void givenHotelDetails_WhenRewardCustomer_ShouldReturnCheapestHotel() {
 
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
 		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
-		ArrayList<Hotel> hotel = hotelReservation.getCheapestHotel(startDate, endDate);
+		ArrayList<Hotel> hotel = hotelReservation.getCheapestHotel("reward", startDate, endDate);
 		String hotelName = hotel.get(0).getHotelName() + " " + hotel.get(1).getHotelName();
 		Assert.assertEquals("Lakewood Bridgewood", hotelName);
 	}
 
 	@Test
-	public void givenHotelDetails_WhenHotelPricesAreSame_shouldReturnHighestRatedHotel() {
+	public void givenHotelDetails_WhenRewardCustomerAndHotelPricesAreSame_ShouldReturnHighestRatedHotel() {
 
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
 		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
-		Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
+		Hotel hotel = hotelReservation.getCheapestBestRatedHotel("reward", startDate, endDate);
 		Assert.assertEquals("Bridgewood", hotel.getHotelName());
 	}
 
 	@Test
-	public void givenHotelDetails_shouldReturnHighestRatedHotel() {
+	public void givenHotelDetails_WhenRewardCustomer_ShouldReturnHighestRatedHotel() {
 
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
@@ -108,7 +186,115 @@ public class HotelReservationTest {
 		hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
 		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
-		Hotel hotel = hotelReservation.getBestRatedHotel(startDate, endDate);
+		Hotel hotel = hotelReservation.getBestRatedHotel("reward", startDate, endDate);
 		Assert.assertEquals("Ridgewood", hotel.getHotelName());
+	}
+	
+	@Test
+	public void givenHotelDetails_WhenNull_ShouldThrowHotelReservationException() {
+		
+		
+		try {
+			HotelReservation hotelReservation = new HotelReservation();
+			hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
+			hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
+			hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
+			LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+			LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+			hotelReservation.getCheapestBestRatedHotel(null, startDate, endDate);
+		}
+		catch(HotelReservationException e){
+			Assert.assertEquals(HotelReservationException.ExceptionType.ENTERED_NULL, e.type);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void givenHotelDetails_WhenEmpty_ShouldThrowHotelReservationException() {
+		
+		
+		try {
+			HotelReservation hotelReservation = new HotelReservation();
+			hotelReservation.addHotel("Lakewood", 3, 110, 90, 80, 80);
+			hotelReservation.addHotel("Bridgewood", 4, 150, 50, 110, 50);
+			hotelReservation.addHotel("Ridgewood", 5, 220, 150, 100, 40);
+			LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+			LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+			hotelReservation.getCheapestBestRatedHotel("", startDate, endDate);
+		}
+		catch(HotelReservationException e){
+			Assert.assertEquals(HotelReservationException.ExceptionType.ENTERED_EMPTY, e.type);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void givenDate_WhenProper_ShouldReturnTrue() {
+		
+		HotelReservation hotelReservation = new HotelReservation();
+		boolean isVAlid = hotelReservation.validateDate("2009-12-13");
+		Assert.assertTrue(isVAlid);
+	}
+	
+	@Test
+	public void givenDate_WhenNotProperFormat_ShouldReturnFalse() {
+		
+		HotelReservation hotelReservation = new HotelReservation();
+		boolean isNotVAlid = hotelReservation.validateDate("19-10-1999");
+		Assert.assertFalse(isNotVAlid);
+	}
+	
+	@Test
+	public void givenDate_WhenSeperatedBySlashes_ShouldReturnFalse() {
+		
+		HotelReservation hotelReservation = new HotelReservation();
+		boolean isNotVAlid = hotelReservation.validateDate("1999/09/2021");
+		Assert.assertFalse(isNotVAlid);
+	}
+	
+	@Test
+	public void givenDate_WhenContainsCharcters_ShouldReturnFalse() {
+		
+		HotelReservation hotelReservation = new HotelReservation();
+		boolean isNotVAlid = hotelReservation.validateDate("200s-a2-19");
+		Assert.assertFalse(isNotVAlid);
+	}
+	
+	@Test
+	public void givenDate_WhenSpecialCharcters_ShouldReturnFalse() {
+		
+		HotelReservation hotelReservation = new HotelReservation();
+		boolean isNotVAlid = hotelReservation.validateDate("2009/%%/13");
+		Assert.assertFalse(isNotVAlid);
+	}
+	
+	@Test
+	public void givenDate_WhenNull_ShouldThrowHotelReservationException() {
+		
+		HotelReservation hotelReservation = new HotelReservation();
+		try {
+			String date = null;
+			hotelReservation.validateDate(date);
+		}
+		catch(HotelReservationException e){
+			Assert.assertEquals(HotelReservationException.ExceptionType.ENTERED_NULL,e.type);
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void givenDate_WhenEmpty_ShouldThrowHotelReservationException() {
+		
+		HotelReservation hotelReservation = new HotelReservation();
+		try {
+			String date = "";
+			hotelReservation.validateDate(date);
+		}
+		catch(HotelReservationException e){
+			Assert.assertEquals(HotelReservationException.ExceptionType.ENTERED_EMPTY,e.type);
+			e.printStackTrace();
+		}
 	}
 }

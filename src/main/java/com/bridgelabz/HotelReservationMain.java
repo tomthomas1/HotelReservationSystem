@@ -20,6 +20,9 @@ public class HotelReservationMain {
 		
 		hotelReservation.printHotelList();
 		
-	
+		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+		Hotel hotel = hotelReservation.getBestRatedHotel("reward", startDate, endDate);
+		System.out.println(hotel);
 }
 }
