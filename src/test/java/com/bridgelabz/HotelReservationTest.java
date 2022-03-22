@@ -41,6 +41,14 @@ public class HotelReservationTest {
 	}
 	
 	@Test
+	public void givenHotelList_WhenAdded_shouldReturnProperHotelRatings(){
+		HotelReservation hotelReservation = new HotelReservation();
+		hotelReservation.addHotel("Ridgewood", 5, 220, 150);
+		int hotelRating = hotelReservation.getHotelList().get(0).getRating();
+		Assert.assertEquals(5, hotelRating);
+	}
+	
+	@Test
 	public void givenHotelList_WhenAdded_shouldReturnProperHotelWeekdayRegularCustomerCost(){
 		HotelReservation hotelReservation = new HotelReservation();
 		hotelReservation.addHotel("Bridgewood", 4, 150, 50);
