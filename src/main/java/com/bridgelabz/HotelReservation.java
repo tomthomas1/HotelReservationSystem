@@ -1,7 +1,11 @@
 package com.bridgelabz;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.Scanner;
 
 /**
  * We have created this class to add the services of the hotel
@@ -22,15 +26,13 @@ public class HotelReservation {
 	 * @param weekendRateRegular -  we will pass the weekend rate for the regular customer
 	 * @return
 	 */
-	public boolean addHotel(String hotelName,int rating, double weekDayRateRegular, double weekendRateRegular) {
-		Hotel hotels = new Hotel();
-		hotels.setHotelName(hotelName);
-		hotels.setRating(rating);
-		hotels.setWeekDayRegularCustomerCost(weekDayRateRegular);
-		hotels.setWeekendRegularCustomerCost(weekendRateRegular);
-		
-		hotelList.add(hotels);
-		return true;
+	public void addHotel(String hotelName, int rating, double regularCustomerRate) {
+		Hotel hotel = new Hotel();
+		hotel.setHotelName(hotelName);
+		hotel.setRating(rating);
+		hotel.setRegularCustomerCost(regularCustomerRate);
+
+		hotelList.add(hotel);
 	}
 	
 	/**
@@ -39,5 +41,32 @@ public class HotelReservation {
 	public void displayHotel() {
 		System.out.println(hotelList);
 		
+	}
+	public int getHotelListSize() {
+		return hotelList.size();
+	}
+	
+	public void printHotelList() {
+		System.out.println(hotelList);
+	}
+	
+	public ArrayList<Hotel> getHotelList(){
+		return hotelList;
+	}
+	
+	/**
+	 * Method to find the cheapest hotel. 
+	 * In this we are using the ChromoUnit to get the date
+	 * Then we are comparing the regular cost of the hotel and finding the cheapest hotel
+	 * We are using the min method to get the list of minimum cost.
+	 * @param startDate - in this we will pass the entry date to hotel
+	 * @param endDate - in this we will pass the exit date from hotel
+	 * @return -  we will return the hotel with cheapest rate
+	 */
+	public Hotel getCheapestHotel(LocalDate startDate, LocalDate endDate) {
+
+		long numberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+		Optional<Hotel> sortedHotelList = hotelList.stream().min(Comparator.comparing(Hotel::getRegularCustomerCost));
+		return sortedHotelList.get();
 	}
 }
