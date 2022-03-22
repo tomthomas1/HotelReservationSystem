@@ -21,11 +21,9 @@ public class HotelReservationMain {
 		hotelReservation.displayHotel();
 		
 		
-		hotelReservation.addHotel("Lakewood", 3, 110, 90);
-		hotelReservation.addHotel("Bridgewood", 4, 150, 50);
 		LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);    
 		LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);    
 		Hotel hotelName = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
-		System.out.println("The cheapest hotel is : \n " + hotelName);
+		System.out.println("The best rated hotel is : \n " + hotelName);
 }
 }
